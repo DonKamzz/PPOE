@@ -101,5 +101,8 @@
   <ItemGroup>
     <Resource Include="lock.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sound.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
