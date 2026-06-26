@@ -5,8 +5,269 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PPOE"
         mc:Ignorable="d"
-        Title="QuizWindow" Height="450" Width="800">
+        Title="CyberShield Quiz"
+    Height="580" 
+    Width="720"
+    WindowStartupLocation="CenterOwner"
+    ResizeMode="NoResize"
+    Background="#0a0a1a"
+    WindowStyle="None">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="AccentNeon" Color="#00f5d4"/>
+        <SolidColorBrush x:Key="AccentPurple" Color="#7c3aed"/>
+        <SolidColorBrush x:Key="AccentPink" Color="#ec4899"/>
+
+        <!-- Rounded Button Style -->
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#94a3b8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderThickness="0"
+                            CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Quiz Option Button Style -->
+        <Style x:Key="QuizOptionButton" TargetType="Button">
+            <Setter Property="Background" Value="#12122a"/>
+            <Setter Property="Foreground" Value="#e2e8f0"/>
+            <Setter Property="BorderBrush" Value="#1a1a3e"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Left" 
+                                          VerticalAlignment="Center"
+                                          Margin="15,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Primary Button Style -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#7c3aed"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderThickness="0"
+                            CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary Button Style -->
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="#12122a"/>
+            <Setter Property="Foreground" Value="#ec4899"/>
+            <Setter Property="BorderBrush" Value="#ec4899"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Custom Title Bar -->
+        <Border Grid.Row="0" 
+            Background="#0a0a1a" 
+            BorderBrush="#12122a"
+            BorderThickness="0,0,0,1"
+            MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
+                    <TextBlock Text="🎯" FontSize="16" Foreground="#00f5d4"/>
+                    <TextBlock Text="CyberShield Quiz" 
+                           FontSize="14" 
+                           FontWeight="Bold" 
+                           Foreground="#00f5d4"
+                           Margin="10,0,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1" Content="✕" 
+                    Style="{StaticResource RoundedButton}"
+                    Width="45" Height="30"
+                    Foreground="#ec4899"
+                    FontSize="14"
+                    Click="CloseWindow_Click"
+                    Margin="0,0,15,0"/>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                <TextBlock Text="🛡️ Cybersecurity Quiz"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#00f5d4"
+                       HorizontalAlignment="Center"/>
+                <TextBlock Text="Test your cybersecurity knowledge"
+                       FontSize="13"
+                       Foreground="#94a3b8"
+                       HorizontalAlignment="Center"
+                       Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <!-- Progress -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <TextBlock x:Name="txtProgress" 
+                       Text="Question 1 of 15"
+                       Foreground="#94a3b8"
+                       FontSize="13"/>
+                <TextBlock x:Name="txtScore" 
+                       Text=" | Score: 0"
+                       Foreground="#00f5d4"
+                       FontSize="13"
+                       Margin="20,0,0,0"/>
+            </StackPanel>
+
+            <!-- Progress Bar -->
+            <ProgressBar Grid.Row="2" 
+                     x:Name="progressBar"
+                     Height="4"
+                     Background="#12122a"
+                     Foreground="#7c3aed"
+                     Margin="0,0,0,15"
+                     BorderThickness="0"/>
+
+            <!-- Question -->
+            <Border Grid.Row="3" 
+                Background="#12122a" 
+                CornerRadius="12" 
+                Padding="20"
+                Margin="0,0,0,15"
+                BorderBrush="#7c3aed"
+                BorderThickness="0,0,0,1">
+                <TextBlock x:Name="txtQuestion" 
+                       Text="Question will appear here"
+                       Foreground="#e2e8f0"
+                       FontSize="16"
+                       TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Options -->
+            <StackPanel Grid.Row="4" Margin="0,0,0,15">
+                <Button x:Name="btnOptionA" 
+                    Content="A. Option 1"
+                    Style="{StaticResource QuizOptionButton}"
+                    Click="btnOption_Click"
+                    Tag="A"/>
+                <Button x:Name="btnOptionB" 
+                    Content="B. Option 2"
+                    Style="{StaticResource QuizOptionButton}"
+                    Click="btnOption_Click"
+                    Tag="B"/>
+                <Button x:Name="btnOptionC" 
+                    Content="C. Option 3"
+                    Style="{StaticResource QuizOptionButton}"
+                    Click="btnOption_Click"
+                    Tag="C"/>
+                <Button x:Name="btnOptionD" 
+                    Content="D. Option 4"
+                    Style="{StaticResource QuizOptionButton}"
+                    Click="btnOption_Click"
+                    Tag="D"/>
+            </StackPanel>
+
+            <!-- Feedback -->
+            <Border Grid.Row="5" 
+                Background="#0a0a1a" 
+                CornerRadius="10" 
+                Padding="15"
+                BorderBrush="#1a1a3e"
+                BorderThickness="1"
+                Margin="0,0,0,15">
+                <TextBlock x:Name="txtFeedback" 
+                       Text="Select an answer to see feedback"
+                       Foreground="#94a3b8"
+                       FontSize="12"
+                       TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnNext" 
+                    Content="Next Question →"
+                    Width="150"
+                    Style="{StaticResource PrimaryButton}"
+                    Click="btnNext_Click"
+                    IsEnabled="False"/>
+                <Button x:Name="btnClose" 
+                    Content="✕ Close"
+                    Width="100"
+                    Margin="10,0,0,0"
+                    Style="{StaticResource SecondaryButton}"
+                    Click="btnClose_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
