@@ -5,8 +5,414 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PPOE"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+            Title="CyberShield - Security Assistant"
+    Height="650" 
+    Width="1000"
+    WindowStartupLocation="CenterScreen"
+    Background="#0a0a1a"
+    WindowStyle="None"
+    ResizeMode="CanResize"
+    AllowsTransparency="False">
+
+    <Window.Resources>
+        <!-- Modern Color Palette -->
+        <SolidColorBrush x:Key="PrimaryDark" Color="#0a0a1a"/>
+        <SolidColorBrush x:Key="PrimaryMid" Color="#12122a"/>
+        <SolidColorBrush x:Key="PrimaryLight" Color="#1a1a3e"/>
+        <SolidColorBrush x:Key="AccentNeon" Color="#00f5d4"/>
+        <SolidColorBrush x:Key="AccentPurple" Color="#7c3aed"/>
+        <SolidColorBrush x:Key="AccentPink" Color="#ec4899"/>
+        <SolidColorBrush x:Key="TextLight" Color="#e2e8f0"/>
+        <SolidColorBrush x:Key="TextDim" Color="#94a3b8"/>
+        <SolidColorBrush x:Key="BorderGlow" Color="#7c3aed"/>
+
+        <!-- Glow Effect -->
+        <DropShadowEffect x:Key="GlowEffect" 
+                      Color="#7c3aed" 
+                      BlurRadius="15" 
+                      ShadowDepth="0"
+                      Opacity="0.5"/>
+
+        <DropShadowEffect x:Key="NeonGlow" 
+                      Color="#00f5d4" 
+                      BlurRadius="20" 
+                      ShadowDepth="0"
+                      Opacity="0.4"/>
+
+        <!-- Rounded Button Style -->
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#94a3b8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderThickness="0"
+                            CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Rounded Input TextBox Style -->
+        <Style x:Key="RoundedTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#12122a"/>
+            <Setter Property="Foreground" Value="#e2e8f0"/>
+            <Setter Property="BorderBrush" Value="#1a1a3e"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="CaretBrush" Value="#00f5d4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="22">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                      Margin="0"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Rounded Action Button Style -->
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#12122a"/>
+            <Setter Property="Foreground" Value="#e2e8f0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderThickness="0"
+                            CornerRadius="22">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Send Button Style -->
+        <Style x:Key="SendButton" TargetType="Button">
+            <Setter Property="Background" Value="#7c3aed"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Effect" Value="{StaticResource GlowEffect}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderThickness="0"
+                            CornerRadius="22">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Custom Title Bar -->
+        <Border Grid.Row="0" 
+            Background="#0a0a1a" 
+            BorderBrush="#12122a"
+            BorderThickness="0,0,0,1"
+            MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
+                    <TextBlock Text="🛡️" FontSize="18" Foreground="#00f5d4"/>
+                    <TextBlock Text="CyberShield" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="#00f5d4"
+                           Margin="10,0,0,0"/>
+                    <TextBlock Text="Security Assistant" 
+                           FontSize="13" 
+                           Foreground="#94a3b8"
+                           Margin="8,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,15,0">
+                    <Button Content="─" 
+                        Style="{StaticResource RoundedButton}"
+                        Width="45" 
+                        Height="30"
+                        Click="MinimizeWindow_Click"/>
+                    <Button Content="☐" 
+                        Style="{StaticResource RoundedButton}"
+                        Width="45" 
+                        Height="30"
+                        FontSize="12"
+                        Click="MaximizeWindow_Click"/>
+                    <Button Content="✕" 
+                        Style="{StaticResource RoundedButton}"
+                        Width="45" 
+                        Height="30"
+                        Foreground="#ec4899"
+                        FontSize="14"
+                        Click="CloseWindow_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <Border Grid.Column="0" Background="#0a0a1a" BorderBrush="#12122a" BorderThickness="0,0,1,0">
+                <StackPanel Margin="20,20,20,0">
+                    <!-- Logo -->
+                    <Border Height="120" 
+                        Width="120"
+                        Background="#12122a" 
+                        CornerRadius="60"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,15"
+                        BorderBrush="#7c3aed"
+                        BorderThickness="2">
+                        <Image x:Name="imgLogo" 
+                           Stretch="Uniform"
+                           Margin="15"/>
+                    </Border>
+
+                    <!-- Brand -->
+                    <TextBlock Text="CYBERSHIELD"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="#00f5d4"
+                           HorizontalAlignment="Center"/>
+                    <TextBlock Text="Awareness Assistant"
+                           FontSize="11"
+                           Foreground="#94a3b8"
+                           HorizontalAlignment="Center"
+                           Margin="0,5,0,20"/>
+
+                    <!-- Divider -->
+                    <Border Height="1" Background="#12122a" Margin="0,0,0,20"/>
+
+                    <!-- Quick Stats -->
+                    <Border Background="#12122a" 
+                        Margin="0,0,0,15" 
+                        Padding="15,12" 
+                        CornerRadius="10"
+                        BorderBrush="#7c3aed"
+                        BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <TextBlock Text="📊 QUICK STATS"
+                                   Foreground="#7c3aed"
+                                   FontSize="10"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,8"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+                                <TextBlock Text="🛡️" Foreground="#00f5d4" FontSize="12" Width="25"/>
+                                <TextBlock Text="Topics" Foreground="#94a3b8" FontSize="11" Width="70"/>
+                                <TextBlock Text="8" Foreground="#00f5d4" FontSize="11" FontWeight="Bold"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+                                <TextBlock Text="📝" Foreground="#7c3aed" FontSize="12" Width="25"/>
+                                <TextBlock Text="Tasks" Foreground="#94a3b8" FontSize="11" Width="70"/>
+                                <TextBlock x:Name="txtTaskCount" Text="0" Foreground="#7c3aed" FontSize="11" FontWeight="Bold"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,3,0,3">
+                                <TextBlock Text="🎯" Foreground="#ec4899" FontSize="12" Width="25"/>
+                                <TextBlock Text="Quiz" Foreground="#94a3b8" FontSize="11" Width="70"/>
+                                <TextBlock Text="15 Q's" Foreground="#ec4899" FontSize="11" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Status -->
+                    <Border Background="#12122a" 
+                        Margin="0" 
+                        Padding="15,12" 
+                        CornerRadius="10">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="8" Height="8" Fill="#00f5d4" Margin="0,3,10,0"/>
+                                <TextBlock Text="STATUS"
+                                       Foreground="#7c3aed"
+                                       FontSize="10"
+                                       FontWeight="Bold"/>
+                            </StackPanel>
+                            <TextBlock x:Name="txtStatus" 
+                                   Text="Online - Ready"
+                                   Foreground="#00f5d4"
+                                   FontSize="12"
+                                   Margin="18,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Chat Area -->
+            <Grid Grid.Column="1" Background="#0a0a1a">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Chat Header -->
+                <Border Grid.Row="0" 
+                    Background="#0a0a1a"
+                    BorderBrush="#12122a"
+                    BorderThickness="0,0,0,1"
+                    Height="50"
+                    Padding="20,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="💬" FontSize="16" Foreground="#00f5d4"/>
+                        <TextBlock Text="Conversation"
+                               Foreground="#e2e8f0"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Margin="10,0,0,0"/>
+                        <TextBlock x:Name="txtUserName" 
+                               Text=""
+                               Foreground="#7c3aed"
+                               FontSize="12"
+                               Margin="15,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Messages -->
+                <ScrollViewer x:Name="scrollViewer" 
+                          Grid.Row="1"
+                          Background="#0a0a1a"
+                          Padding="20,15">
+                    <ListBox x:Name="lstConversation" 
+                         Background="Transparent" 
+                         BorderThickness="0"
+                         Margin="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="12" 
+                                    Margin="5,4"
+                                    Padding="16,12"
+                                    Background="{Binding MsgBackground}"
+                                    HorizontalAlignment="{Binding MsgAlignment}"
+                                    MaxWidth="520"
+                                    Effect="{Binding MsgEffect}">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Message}" 
+                                               TextWrapping="Wrap" 
+                                               Foreground="{Binding MsgForeground}"
+                                               FontSize="13"
+                                               FontFamily="Segoe UI"/>
+                                        <TextBlock Text="{Binding Timestamp, StringFormat='HH:mm'}" 
+                                               FontSize="9" 
+                                               Foreground="#64748b"
+                                               HorizontalAlignment="Right"
+                                               Margin="0,6,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+
+                <!-- Input Area -->
+                <Border Grid.Row="2" 
+                    Background="#0a0a1a"
+                    BorderBrush="#12122a"
+                    BorderThickness="0,1,0,0"
+                    Padding="20,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="txtUserInput"
+                             Grid.Column="0"
+                             Height="44"
+                             Style="{StaticResource RoundedTextBox}"
+                             KeyDown="txtUserInput_KeyDown"/>
+
+                        <Button x:Name="btnSend"
+                            Grid.Column="1"
+                            Content="➤"
+                            Style="{StaticResource SendButton}"
+                            Margin="8,0,0,0"
+                            Click="btnSend_Click"/>
+
+                        <Button x:Name="btnTasks"
+                            Grid.Column="2"
+                            Content="📋"
+                            Style="{StaticResource ActionButton}"
+                            Margin="6,0,0,0"
+                            Foreground="#f59e0b"
+                            Click="btnTasks_Click"
+                            ToolTip="View Tasks"/>
+
+                        <Button x:Name="btnQuiz"
+                            Grid.Column="3"
+                            Content="🎯"
+                            Style="{StaticResource ActionButton}"
+                            Margin="6,0,0,0"
+                            Foreground="#10b981"
+                            Click="btnQuiz_Click"
+                            ToolTip="Take Quiz"/>
+
+                        <Button x:Name="btnClear"
+                            Grid.Column="4"
+                            Content="🗑"
+                            Style="{StaticResource ActionButton}"
+                            Margin="6,0,0,0"
+                            Foreground="#ef4444"
+                            Click="btnClear_Click"
+                            ToolTip="Clear Chat"/>
+
+                        <Button x:Name="btnSetupDB"
+                            Grid.Column="5"
+                            Content="⚡"
+                            Style="{StaticResource ActionButton}"
+                            Margin="6,0,0,0"
+                            Foreground="#8b5cf6"
+                            Click="btnSetupDB_Click"
+                            ToolTip="Setup Database"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
