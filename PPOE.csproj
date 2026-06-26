@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="ActivityLogger.cs" />
     <Compile Include="CyberChatMessage.cs" />
+    <Compile Include="TaskItem.cs" />
     <Compile Include="UserProfile.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
