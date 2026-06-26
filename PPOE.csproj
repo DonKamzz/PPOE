@@ -108,6 +108,8 @@
     <Compile Include="CyberChatMessage.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="DatabaseSetup.cs" />
+    <Compile Include="QuizManager.cs" />
+    <Compile Include="QuizQuestion.cs" />
     <Compile Include="QuizWindow.xaml.cs">
       <DependentUpon>QuizWindow.xaml</DependentUpon>
     </Compile>
